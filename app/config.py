@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     database_host: str
     database_port: int
     database_name: str
+    
+    ##If I want to add more properties regarding me then I need to add it to the .env folder first.
     model_config = SettingsConfigDict(env_file=".env")
 
 settings = Settings()

@@ -22,4 +22,8 @@ class Response(BaseModel, Generic[T]):
     message: str
     result: Optional[T] = None
 
+class UserLogin(BaseModel):
+    user_name: str
+    password: str
+
 

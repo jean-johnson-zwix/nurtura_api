@@ -14,6 +14,6 @@ def get_settings():
 
 @app.get('/')
 async def hello_world():
-    return {"message":"Hellow World"}
+    return {"message":"Hello World"}
 
 app.include_router(router,prefix="/auth", tags=["user management"])
