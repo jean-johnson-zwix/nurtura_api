@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
 from model import UserProfile, UserCredential 
-from schemas import CreateUserProfileRequest, UserLogin
+from schemas import CreateUserProfileRequest, UserLogin, Response
 import util
+from fastapi import FastAPI, HTTPException, status, Request
 
 # Create a new User Profile and User Credential
 def create_user(db:Session, req = CreateUserProfileRequest):
@@ -36,7 +37,10 @@ def userlogin(db: Session, req: UserLogin):
     user_profile = db.query(UserProfile).filter(UserProfile.user_name == username).first()
 
     if not user_profile:
-        return {"message": "User does not exist"}
+        raise HTTPException(
+            status_code=404,
+            detail="User name doesn't exist"
+        )
 
     user_id = user_profile.user_id
 
@@ -48,7 +52,10 @@ def userlogin(db: Session, req: UserLogin):
         # Login successful, return user profile
         return user_profile
 
-    return {"message": "Incorrect password"}
+    raise HTTPException(
+        status_code=401,
+        detail="Invalid password"
+    )
 
      
     
